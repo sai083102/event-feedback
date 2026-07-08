@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — EventPulse{% endblock %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="hero-content">
+    <span class="hero-tag">Analytics</span>
+    <h1 class="hero-title">Dashboard</h1>
+    <p class="hero-subtitle">Overview of all collected feedback responses.</p>
+  </div>
+</div>
+
+<div class="container container--wide">
+
+  <!-- Stats Cards -->
+  <div class="stats-grid" id="statsGrid">
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-blue">📋</div>
+      <div class="stat-info">
+        <div class="stat-value" id="statTotal">—</div>
+        <div class="stat-label">Total Responses</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-orange">📝</div>
+      <div class="stat-info">
+        <div class="stat-value" id="statPre">—</div>
+        <div class="stat-label">Pre-Feedback</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-green">✅</div>
+      <div class="stat-info">
+        <div class="stat-value" id="statPost">—</div>
+        <div class="stat-label">Post-Feedback</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-yellow">⭐</div>
+      <div class="stat-info">
+        <div class="stat-value" id="statRating">—</div>
+        <div class="stat-label">Avg. Rating</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="charts-grid">
+    <div class="dashboard-card">
+      <h2 class="card-title">Rating Distribution</h2>
+      <p class="card-subtitle">Breakdown of post-event satisfaction scores</p>
+      <div class="chart-container">
+        <canvas id="ratingChart"></canvas>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2 class="card-title">Recommendation</h2>
+      <p class="card-subtitle">Would attendees recommend this session?</p>
+      <div class="chart-container">
+        <canvas id="recommendChart"></canvas>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2 class="card-title">Experience Level</h2>
+      <p class="card-subtitle">Self-reported knowledge going into the session</p>
+      <div class="chart-container">
+        <canvas id="experienceChart"></canvas>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2 class="card-title">Topics Requested</h2>
+      <p class="card-subtitle">What attendees want covered</p>
+      <div class="chart-container">
+        <canvas id="topicsChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Responses Table -->
+  <div class="dashboard-card">
+    <div class="table-header">
+      <div>
+        <h2 class="card-title" style="margin-bottom:0">All Responses</h2>
+        <p class="card-subtitle" id="tableCount"></p>
+      </div>
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="pre">Pre</button>
+        <button class="filter-btn" data-filter="post">Post</button>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="responses-table" id="responsesTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Form Type</th>
+            <th>Timestamp</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr class="loading-row">
+            <td colspan="5">Loading responses…</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="no-data" id="noData" hidden>
+      <div class="no-data-icon">📭</div>
+      <div>No responses found for this filter.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Detail Modal -->
+<div class="modal-overlay" id="modalOverlay" hidden role="presentation">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modalTitle">Response Details</h3>
+      <button class="modal-close" id="modalClose" aria-label="Close details">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

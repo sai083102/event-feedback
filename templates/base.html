@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}EventPulse Feedback{% endblock %}</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%23f97316'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">
+      <span class="logo-icon">◉</span> EventPulse
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks" role="list">
+      <li>
+        <a href="/pre-feedback" class="nav-link {% if request.endpoint == 'pre_feedback' %}active{% endif %}">
+          Pre-Feedback
+        </a>
+      </li>
+      <li>
+        <a href="/post-feedback" class="nav-link {% if request.endpoint == 'post_feedback' %}active{% endif %}">
+          Post-Feedback
+        </a>
+      </li>
+      <li>
+        <a href="/dashboard" class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}">
+          Dashboard
+        </a>
+      </li>
+      {% if session.get('authenticated') %}
+      <li>
+        <a href="/logout" class="nav-link">Logout</a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main class="main-content">
+  {% block content %}{% endblock %}
+</main>
+
+<!-- Chatbot Widget -->
+<div class="chat-widget" id="chatWidget">
+  <button class="chat-toggle" id="chatToggle" aria-label="Open chat assistant">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="chat-badge" id="chatBadge">1</span>
+  </button>
+
+  <div class="chat-panel" id="chatPanel" role="dialog" aria-label="Chat assistant" aria-modal="true">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar">AI</div>
+        <div>
+          <div class="chat-bot-name">EventPulse Assistant</div>
+          <div class="chat-status">● Online</div>
+        </div>
+      </div>
+      <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-message bot">
+        <div class="message-bubble">👋 Hi! I'm the EventPulse assistant. Ask me anything about the feedback forms or the event!</div>
+        <div class="message-time">Just now</div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" class="chat-input" id="chatInput"
+             placeholder="Type a message…" autocomplete="off" aria-label="Chat message" />
+      <button class="chat-send" id="chatSend" aria-label="Send message">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <line x1="22" y1="2" x2="11" y2="13" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2" fill="white"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

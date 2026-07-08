@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block title %}Post-Event Feedback — EventPulse{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="hero-content">
+    <span class="hero-tag">Step 2</span>
+    <h1 class="hero-title">Post-Event Feedback</h1>
+    <p class="hero-subtitle">Tell us how the session went — your feedback shapes the next one.</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Form Card -->
+  <div class="form-card" id="formCard">
+    <form id="postForm" novalidate autocomplete="off">
+
+      <!-- Section: Personal Info -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <span class="section-num">01</span> Your Information
+        </h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="name">Full Name <span class="required">*</span></label>
+            <input type="text" id="name" name="name" class="form-input"
+                   placeholder="Jane Doe" autocomplete="name" />
+            <span class="form-error" id="nameError"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address <span class="required">*</span></label>
+            <input type="email" id="email" name="email" class="form-input"
+                   placeholder="jane@example.com" autocomplete="email" />
+            <span class="form-error" id="emailError"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Star Rating -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <span class="section-num">02</span> Overall Rating <span class="required">*</span>
+        </h2>
+        <p class="section-hint">How would you rate the session overall?</p>
+        <div class="star-rating-container">
+          <div class="star-rating" id="starRating" role="radiogroup" aria-label="Overall rating">
+            <button type="button" class="star" data-value="1" aria-label="1 star — Poor">★</button>
+            <button type="button" class="star" data-value="2" aria-label="2 stars — Fair">★</button>
+            <button type="button" class="star" data-value="3" aria-label="3 stars — Good">★</button>
+            <button type="button" class="star" data-value="4" aria-label="4 stars — Very Good">★</button>
+            <button type="button" class="star" data-value="5" aria-label="5 stars — Excellent">★</button>
+          </div>
+          <span class="rating-label" id="ratingLabel">Click to rate</span>
+        </div>
+        <input type="hidden" id="rating" name="rating" />
+        <span class="form-error" id="ratingError"></span>
+      </div>
+
+      <!-- Section: Feedback Text -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <span class="section-num">03</span> Your Feedback
+        </h2>
+        <div class="form-group">
+          <label class="form-label" for="went_well">
+            What went well? <span class="required">*</span>
+          </label>
+          <textarea id="went_well" name="went_well" class="form-textarea" rows="4"
+                    placeholder="What did you enjoy or find most valuable about the session?"></textarea>
+          <div class="char-count"><span id="wellCount">0</span> / 500</div>
+          <span class="form-error" id="wentWellError"></span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="improve">What could be improved?</label>
+          <textarea id="improve" name="improve" class="form-textarea" rows="4"
+                    placeholder="Any suggestions to make the next session even better…"></textarea>
+          <div class="char-count"><span id="improveCount">0</span> / 500</div>
+        </div>
+      </div>
+
+      <!-- Section: Recommend -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <span class="section-num">04</span> Would you recommend this? <span class="required">*</span>
+        </h2>
+        <p class="section-hint">Would you recommend this session to a colleague or friend?</p>
+        <div class="pill-group recommend-group" id="recommendPills" role="radiogroup" aria-label="Recommendation">
+          <button type="button" class="pill pill-yes" data-value="yes" aria-pressed="false">👍 Yes</button>
+          <button type="button" class="pill pill-maybe" data-value="maybe" aria-pressed="false">🤔 Maybe</button>
+          <button type="button" class="pill pill-no" data-value="no" aria-pressed="false">👎 No</button>
+        </div>
+        <input type="hidden" id="recommend" name="recommend" />
+        <span class="form-error" id="recommendError"></span>
+      </div>
+
+      <!-- Section: Additional Comments -->
+      <div class="form-section last-section">
+        <h2 class="section-title">
+          <span class="section-num">05</span> Additional Comments
+        </h2>
+        <div class="form-group">
+          <label class="form-label" for="comments">Anything else you'd like to share?</label>
+          <textarea id="comments" name="comments" class="form-textarea" rows="3"
+                    placeholder="Any other thoughts, ideas, or shoutouts…"></textarea>
+          <div class="char-count"><span id="commentsCount">0</span> / 500</div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn">
+        <span class="btn-text">Submit Post-Feedback</span>
+        <span class="btn-loader" hidden>
+          <svg class="spin" width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.3)" stroke-width="3"/>
+            <path d="M12 2a10 10 0 0 1 10 10" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          Submitting…
+        </span>
+      </button>
+    </form>
+  </div>
+
+  <!-- Success Screen -->
+  <div class="success-card" id="successCard" hidden>
+    <div class="success-icon-wrap">
+      <div class="success-icon">✓</div>
+    </div>
+    <h2 class="success-title">Thank you!</h2>
+    <p class="success-message">
+      Your post-event feedback has been recorded. Your insights help us improve every future session.
+    </p>
+    <div class="success-actions">
+      <a href="/pre-feedback" class="btn-primary">Submit Another Response</a>
+      <a href="/dashboard" class="btn-outline">View Dashboard</a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/post-form.js') }}"></script>
+{% endblock %}
