@@ -57,6 +57,7 @@ def pre_feedback():
 
 
 @app.route("/post-feedback")
+@login_required
 def post_feedback():
     return render_template("post_form.html")
 
