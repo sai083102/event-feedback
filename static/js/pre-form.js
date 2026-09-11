@@ -4,12 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const successCard = document.getElementById('successCard');
   const submitBtn   = document.getElementById('submitBtn');
 
-  initPillGroup('experiencePills', 'experience_level', 'experienceError');
-  initCheckboxPills('topicPills');
-  initCharCount('expectations', 'expCount', 500);
+  initPillGroup('banquetPills', 'attended_banquet', 'banquetError');
+  initCharCount('worked_well',       'workedWellCount',       500);
+  initCharCount('improve_last_year', 'improveLastYearCount',  500);
+  initCharCount('keep_repeat',       'keepRepeatCount',       500);
+  initCharCount('one_change',        'oneChangeCount',        500);
 
   // Live validation — clear errors as user types/selects
-  ['name', 'email', 'role', 'expectations'].forEach(id => {
+  ['name', 'email', 'worked_well', 'improve_last_year', 'keep_repeat', 'one_change'].forEach(id => {
     document.getElementById(id).addEventListener('input', () => clearError(id));
   });
 
@@ -19,17 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setLoading(true);
 
-    const topics = [...document.querySelectorAll('#topicPills .checkbox-pill.active')]
-      .map(p => p.dataset.value);
-
     const payload = {
-      form_type:        'pre',
-      name:             document.getElementById('name').value.trim(),
-      email:            document.getElementById('email').value.trim(),
-      role:             document.getElementById('role').value.trim(),
-      experience_level: document.getElementById('experience_level').value,
-      topics,
-      expectations:     document.getElementById('expectations').value.trim(),
+      form_type:          'pre',
+      name:                document.getElementById('name').value.trim(),
+      email:               document.getElementById('email').value.trim(),
+      attended_banquet:    document.getElementById('attended_banquet').value,
+      worked_well:         document.getElementById('worked_well').value.trim(),
+      improve_last_year:   document.getElementById('improve_last_year').value.trim(),
+      keep_repeat:         document.getElementById('keep_repeat').value.trim(),
+      one_change:          document.getElementById('one_change').value.trim(),
     };
 
     try {
@@ -56,12 +56,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let ok = true;
     ok = checkField('name',  v => v.length >= 2,  'Please enter your full name.')            && ok;
     ok = checkField('email', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), 'Enter a valid email address.') && ok;
-    ok = checkField('role',  v => v.length >= 2,  'Please enter your role or designation.')  && ok;
-    ok = checkField('expectations', v => v.length >= 10,
-      'Please describe your expectations (at least 10 characters).')                          && ok;
+    ok = checkField('worked_well', v => v.length >= 5,
+      'Please share what worked well (at least 5 characters).')                                && ok;
+    ok = checkField('improve_last_year', v => v.length >= 5,
+      'Please share what could be better (at least 5 characters).')                            && ok;
+    ok = checkField('keep_repeat', v => v.length >= 5,
+      'Please share what we should keep (at least 5 characters).')                             && ok;
+    ok = checkField('one_change', v => v.length >= 5,
+      'Please share the one change you\'d make (at least 5 characters).')                       && ok;
 
-    if (!document.getElementById('experience_level').value) {
-      setError('experienceError', 'Please select your experience level.');
+    if (!document.getElementById('attended_banquet').value) {
+      setError('banquetError', 'Please select Yes or No.');
       ok = false;
     }
     return ok;
@@ -119,17 +124,6 @@ function initPillGroup(groupId, hiddenId, errorId) {
         const err = document.getElementById(errorId);
         if (err) err.textContent = '';
       }
-    });
-  });
-}
-
-function initCheckboxPills(groupId) {
-  const group = document.getElementById(groupId);
-  if (!group) return;
-  group.querySelectorAll('.checkbox-pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-      pill.classList.toggle('active');
-      pill.setAttribute('aria-pressed', pill.classList.contains('active'));
     });
   });
 }

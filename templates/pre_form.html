@@ -6,7 +6,7 @@
   <div class="hero-content">
     <span class="hero-tag">Step 1</span>
     <h1 class="hero-title">Pre-Event Feedback</h1>
-    <p class="hero-subtitle">Help us tailor this session to your needs before it begins.</p>
+    <p class="hero-subtitle">Help us make this year's event even better.</p>
   </div>
 </div>
 
@@ -35,67 +35,67 @@
             <span class="form-error" id="emailError"></span>
           </div>
         </div>
+      </div>
+
+      <!-- Section: Banquet Attendance -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <span class="section-num">02</span> Did you attend 2025 FWCSYE banquet? <span class="required">*</span>
+        </h2>
+        <div class="pill-group" id="banquetPills" role="radiogroup" aria-label="Attended 2025 FWCSYE banquet">
+          <button type="button" class="pill" data-value="yes" aria-pressed="false">Yes</button>
+          <button type="button" class="pill" data-value="no" aria-pressed="false">No</button>
+        </div>
+        <input type="hidden" id="attended_banquet" name="attended_banquet" />
+        <span class="form-error" id="banquetError"></span>
+      </div>
+
+      <!-- Section: Last Year -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <span class="section-num">03</span> What worked particularly well at last year's event? <span class="required">*</span>
+        </h2>
         <div class="form-group">
-          <label class="form-label" for="role">Role / Designation <span class="required">*</span></label>
-          <input type="text" id="role" name="role" class="form-input"
-                 placeholder="e.g. Software Engineer, Student, Manager" />
-          <span class="form-error" id="roleError"></span>
+          <textarea id="worked_well" name="worked_well" class="form-textarea" rows="4"
+                    placeholder="Tell us what stood out…"></textarea>
+          <div class="char-count"><span id="workedWellCount">0</span> / 500</div>
+          <span class="form-error" id="workedWellError"></span>
         </div>
       </div>
 
-      <!-- Section: Experience Level -->
       <div class="form-section">
         <h2 class="section-title">
-          <span class="section-num">02</span> Experience Level <span class="required">*</span>
+          <span class="section-num">04</span> What could we have done better last year? <span class="required">*</span>
         </h2>
-        <p class="section-hint">How would you rate your current knowledge of the session topic?</p>
-        <div class="pill-group" id="experiencePills" role="radiogroup" aria-label="Experience level">
-          <button type="button" class="pill" data-value="beginner" aria-pressed="false">
-            🌱 Beginner
-          </button>
-          <button type="button" class="pill" data-value="intermediate" aria-pressed="false">
-            ⚡ Intermediate
-          </button>
-          <button type="button" class="pill" data-value="advanced" aria-pressed="false">
-            🚀 Advanced
-          </button>
+        <div class="form-group">
+          <textarea id="improve_last_year" name="improve_last_year" class="form-textarea" rows="4"
+                    placeholder="Tell us what could have been better…"></textarea>
+          <div class="char-count"><span id="improveLastYearCount">0</span> / 500</div>
+          <span class="form-error" id="improveLastYearError"></span>
         </div>
-        <input type="hidden" id="experience_level" name="experience_level" />
-        <span class="form-error" id="experienceError"></span>
       </div>
 
-      <!-- Section: Topics -->
       <div class="form-section">
         <h2 class="section-title">
-          <span class="section-num">03</span> Topics You Want Covered
+          <span class="section-num">05</span> What should we definitely keep or repeat this year? <span class="required">*</span>
         </h2>
-        <p class="section-hint">Select all that apply — we'll prioritize accordingly.</p>
-        <div class="checkbox-pill-group" id="topicPills">
-          <button type="button" class="checkbox-pill" data-value="python">Python</button>
-          <button type="button" class="checkbox-pill" data-value="web_dev">Web Development</button>
-          <button type="button" class="checkbox-pill" data-value="ml_ai">ML / AI</button>
-          <button type="button" class="checkbox-pill" data-value="data_science">Data Science</button>
-          <button type="button" class="checkbox-pill" data-value="devops">DevOps</button>
-          <button type="button" class="checkbox-pill" data-value="security">Security</button>
-          <button type="button" class="checkbox-pill" data-value="cloud">Cloud</button>
-          <button type="button" class="checkbox-pill" data-value="databases">Databases</button>
-          <button type="button" class="checkbox-pill" data-value="other">Other</button>
+        <div class="form-group">
+          <textarea id="keep_repeat" name="keep_repeat" class="form-textarea" rows="4"
+                    placeholder="What should we hold onto…"></textarea>
+          <div class="char-count"><span id="keepRepeatCount">0</span> / 500</div>
+          <span class="form-error" id="keepRepeatError"></span>
         </div>
       </div>
 
-      <!-- Section: Expectations -->
       <div class="form-section last-section">
         <h2 class="section-title">
-          <span class="section-num">04</span> Your Expectations
+          <span class="section-num">06</span> What is the ONE change that would make this year's event better? <span class="required">*</span>
         </h2>
         <div class="form-group">
-          <label class="form-label" for="expectations">
-            What do you hope to gain from this session? <span class="required">*</span>
-          </label>
-          <textarea id="expectations" name="expectations" class="form-textarea" rows="5"
-                    placeholder="Describe what you hope to learn, achieve, or take away…"></textarea>
-          <div class="char-count"><span id="expCount">0</span> / 500</div>
-          <span class="form-error" id="expectationsError"></span>
+          <textarea id="one_change" name="one_change" class="form-textarea" rows="4"
+                    placeholder="If you could change just one thing…"></textarea>
+          <div class="char-count"><span id="oneChangeCount">0</span> / 500</div>
+          <span class="form-error" id="oneChangeError"></span>
         </div>
       </div>
 

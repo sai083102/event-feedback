@@ -571,6 +571,14 @@ ul     { list-style: none; }
   margin-bottom: 1.25rem;
 }
 
+.charts-grid .chart-wide {
+  grid-column: 1 / -1;
+}
+
+.charts-grid .chart-wide .chart-container {
+  max-width: 320px;
+}
+
 @media (max-width: 900px) {
   .charts-grid { grid-template-columns: 1fr; }
 }
@@ -678,6 +686,7 @@ ul     { list-style: none; }
 }
 
 .no-data { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+.no-data[hidden] { display: none; }
 .no-data-icon { font-size: 2rem; }
 
 /* =========================================

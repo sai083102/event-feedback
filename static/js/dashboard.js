@@ -4,8 +4,7 @@
 let allResponses   = [];
 let ratingChart     = null;
 let recommendChart  = null;
-let experienceChart = null;
-let topicsChart     = null;
+let banquetChart    = null;
 
 if (typeof ChartDataLabels !== 'undefined') Chart.register(ChartDataLabels);
 
@@ -23,8 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateStats(allResponses);
   renderChart(allResponses);
   renderRecommendChart(allResponses);
-  renderExperienceChart(allResponses);
-  renderTopicsChart(allResponses);
+  renderBanquetChart(allResponses);
   renderTable(allResponses);
 
   // Filter buttons
@@ -159,21 +157,21 @@ function renderRecommendChart(responses) {
   });
 }
 
-function renderExperienceChart(responses) {
+function renderBanquetChart(responses) {
   const pre    = responses.filter(r => r.form_type === 'pre');
-  const groups = ['beginner', 'intermediate', 'advanced'];
-  const counts = groups.map(g => pre.filter(r => r.experience_level === g).length);
+  const groups = ['yes', 'no'];
+  const counts = groups.map(g => pre.filter(r => r.attended_banquet === g).length);
 
-  const ctx = document.getElementById('experienceChart').getContext('2d');
-  if (experienceChart) experienceChart.destroy();
+  const ctx = document.getElementById('banquetChart').getContext('2d');
+  if (banquetChart) banquetChart.destroy();
 
-  experienceChart = new Chart(ctx, {
+  banquetChart = new Chart(ctx, {
     type: 'pie',
     data: {
-      labels: ['Beginner', 'Intermediate', 'Advanced'],
+      labels: ['Yes', 'No'],
       datasets: [{
         data: counts,
-        backgroundColor: ['#93c5fd', '#818cf8', '#c084fc'],
+        backgroundColor: ['#4ade80', '#fca5a5'],
       }],
     },
     options: {
@@ -186,59 +184,6 @@ function renderExperienceChart(responses) {
           font: { weight: '600' },
           formatter: hideZero,
         },
-      },
-    },
-  });
-}
-
-const TOPIC_LABELS = {
-  python:       'Python',
-  web_dev:      'Web Dev',
-  ml_ai:        'ML / AI',
-  data_science: 'Data Sci',
-  devops:       'DevOps',
-  security:     'Security',
-  cloud:        'Cloud',
-  databases:    'Databases',
-  other:        'Other',
-};
-
-function renderTopicsChart(responses) {
-  const pre    = responses.filter(r => r.form_type === 'pre');
-  const keys   = Object.keys(TOPIC_LABELS);
-  const counts = keys.map(k => pre.filter(r => Array.isArray(r.topics) && r.topics.includes(k)).length);
-
-  const ctx = document.getElementById('topicsChart').getContext('2d');
-  if (topicsChart) topicsChart.destroy();
-
-  topicsChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: keys.map(k => TOPIC_LABELS[k]),
-      datasets: [{
-        label: 'Requests',
-        data: counts,
-        backgroundColor: '#60a5fa',
-        borderRadius: 7,
-        borderSkipped: false,
-      }],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        datalabels: {
-          anchor: 'end',
-          align: 'top',
-          color: '#1e293b',
-          font: { weight: '600' },
-          formatter: hideZero,
-        },
-      },
-      scales: {
-        y: { beginAtZero: true, grace: '15%', ticks: { stepSize: 1, precision: 0 }, grid: { color: '#f1f5f9' } },
-        x: { grid: { display: false } },
       },
     },
   });
@@ -285,13 +230,14 @@ function openModal(id) {
 
   const fields = r.form_type === 'pre'
     ? [
-        ['Name',              r.name,             false],
-        ['Email',             r.email,            false],
-        ['Role',              r.role,             false],
-        ['Experience Level',  r.experience_level, false],
-        ['Topics Selected',   Array.isArray(r.topics) ? r.topics.join(', ') : r.topics, false],
-        ['Submitted',         fmtDate(r.timestamp), false],
-        ['Expectations',      r.expectations,     true],
+        ['Name',                        r.name,  false],
+        ['Email',                       r.email, false],
+        ['Attended 2025 Banquet',       r.attended_banquet === 'yes' ? 'Yes' : r.attended_banquet === 'no' ? 'No' : '—', false],
+        ['Submitted',                   fmtDate(r.timestamp), false],
+        ['What Worked Well',            r.worked_well,       true],
+        ['What Could Be Better',        r.improve_last_year, true],
+        ['What to Keep / Repeat',       r.keep_repeat,       true],
+        ['The One Change',              r.one_change,        true],
       ]
     : [
         ['Name',              r.name,    false],
